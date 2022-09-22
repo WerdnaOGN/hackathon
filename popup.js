@@ -1,25 +1,17 @@
-// Initialize button with user's preferred color
-let changeColor = document.getElementById("changeColor");
+document.addEventListener('DOMContentLoaded', () => {
+    const button = document.querySelector('button');
+    button.addEventListener('click', () => {
+        const div = document.querySelector('div');
+        if (div) div.remove();
+        fetch('https://excuser.herokuapp.com/v1/excuse')
+        .then(res => res.json())
+        .then(data => {
+            const div = document.createElement('div');
+            div.innerText = data[0].excuse;
+            document.body.appendChild(div);            
+            })
+            
+          })
+})
 
-chrome.storage.sync.get("color", ({ color }) => {
-  changeColor.style.backgroundColor = color;
-});
-
-// When the button is clicked, inject setPageBackgroundColor into current page
-changeColor.addEventListener("click", async () => {
-    let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    console.log('clicking')
-  
-    chrome.scripting.executeScript({
-      target: { tabId: tab.id },
-      func: setPageBackgroundColor,
-    });
-  });
-  
-  // The body of this function will be executed as a content script inside the
-  // current page
-  function setPageBackgroundColor() {
-    chrome.storage.sync.get("color", ({ color }) => {
-      document.body.style.backgroundColor = color;
-    });
-  }
+// add additonal buttons to provide excuse based on categories https://excuser.herokuapp.com/
