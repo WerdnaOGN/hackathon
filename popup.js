@@ -15,3 +15,5 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 // add additonal buttons to provide excuse based on categories https://excuser.herokuapp.com/
+//based on category clicked need to add category to end of endpoint
+// EX: children button clicked - concatenate excuse url with string children
