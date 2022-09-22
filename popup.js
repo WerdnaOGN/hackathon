@@ -1,18 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const button = document.querySelector('button');
-    button.addEventListener('click', () => {
-        const div = document.querySelector('div');
-        if (div) div.remove();
-        fetch('https://excuser.herokuapp.com/v1/excuse')
-        .then(res => res.json())
-        .then(data => {
-            const div = document.createElement('div');
-            div.innerText = data[0].excuse;
-            document.body.appendChild(div);            
-            })
-            
-          })
+    const random = document.querySelector('#random');
+    random.addEventListener('click', async () => {
+        const excuse = document.querySelector('#excuse');
+        const res = await fetch('https://excuser.herokuapp.com/v1/excuse');
+        const data = await res.json();
+        excuse.innerText = data[0].excuse;
+    })
+
+    const categories = document.querySelectorAll('.category');
+    categories.forEach(category => category.addEventListener('click', () => {
+        const id = category.getAttribute('id');
+        fetchExcuse(id);
+    }))
 })
+
+async function fetchExcuse(category) {
+    const res = await fetch(`https://excuser.herokuapp.com/v1/excuse/${category}`);
+    const data = await res.json();
+    const excuse = document.querySelector('#excuse');
+    excuse.innerText = data[0].excuse;
+}
 
 // add additonal buttons to provide excuse based on categories https://excuser.herokuapp.com/
 //based on category clicked need to add category to end of endpoint
