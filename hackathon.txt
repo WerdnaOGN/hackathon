@@ -1,0 +1,6 @@
+1. manifest.json
+2. background.js 
+    a. Registering a background script in the manifest tells the extension which file to reference, and how that file should behave.
+
+3. UI for extension: popup.html
+4. popup.js: logic for popup.html
